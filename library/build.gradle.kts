@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.compose.compiler)
 }
 
 group = "io.github.jackbeback"
@@ -30,6 +32,7 @@ kotlin {
             dependencies {
                 // Multiplatform dependencies
                 implementation(libs.kotlin.test)
+                implementation(compose.runtime)
             }
         }
         val commonTest by getting {
@@ -39,12 +42,9 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.compose.ui)
-                implementation(libs.compose.material)
-                implementation(libs.compose.runtime)
-                implementation(libs.compose.foundation)
-                implementation(libs.compose.activity)
-                implementation(libs.compose.navigation)
+                implementation(libs.ui.android)
+                implementation(libs.runtime.android)
+                implementation(libs.foundation.android)
             }
         }
     }
@@ -59,14 +59,6 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
-}
-dependencies {
-    implementation(libs.ui.android)
-    implementation(libs.runtime.android)
-    implementation(libs.foundation.android)
 }
 
 mavenPublishing {
@@ -96,9 +88,9 @@ mavenPublishing {
             }
         }
         scm {
-            url = "XXX"
-            connection = "YYY"
-            developerConnection = "ZZZ"
+            url = "https://github.com/JackBeBack/UIKit"
+            connection = "smc:git:git://github.com:JackBeBack/UIKit.git"
+            developerConnection = "scm:git:ssh://git@github.com:JackBeBack/UIKit.git"
         }
     }
 }
